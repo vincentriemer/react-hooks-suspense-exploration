@@ -3,9 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
-    "react-scripts": "2.1.1"
+    "serve": "^10.0.2"
+  },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^0.0.0",
+    "@reach/router": "^1.2.1",
+    "react": "^16.7.0-alpha.0",
+    "react-cache": "^2.0.0-alpha.1",
+    "react-dom": "^16.7.0-alpha.0",
+    "react-scripts": "2.1.1",
+    "react-spinners": "^0.4.7",
+    "react-window": "^1.2.2",
+    "react-spring": "^6.1.6",
+    "scheduler": "^0.10.0",
+    "the-platform": "^0.9.3",
+    "pepjs": "^0.4.3",
+    "invariant": "^2.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -14,7 +27,13 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "plugins": [
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error"
+    }
   },
   "browserslist": [
     ">0.2%",
