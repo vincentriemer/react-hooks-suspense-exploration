@@ -9,7 +9,7 @@ const App = props => {
   return (
     <React.Suspense maxDuration={1000} fallback={<Spinner />}>
       <Router>
-        <Redirect from="/" to="/movies" />
+        <Redirect noThrow from="/" to="/movies" />
         <Home path="/movies" />
         <Detail path="/movies/:movieId" />
       </Router>

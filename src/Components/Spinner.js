@@ -1,4 +1,10 @@
+import "./Spinner.css";
 import React from "react";
-import { SyncLoader } from "react-spinners";
 
-export const Spinner = props => <SyncLoader />;
+export const Spinner = props => (
+  <div className="la-ball-scale-multiple la-dark la-2x">
+    <div />
+    <div />
+    <div />
+  </div>
+);
