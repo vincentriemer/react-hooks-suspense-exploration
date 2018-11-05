@@ -39,8 +39,6 @@ const MovieCell = React.memo(props => {
         height: ITEM_HEIGHT - 60,
         marginLeft: 30,
         marginRight: 30,
-        willChange: "transform",
-        cursor: "pointer",
       }}
     >
       <div
@@ -61,6 +59,7 @@ const MovieCell = React.memo(props => {
           overflow: "hidden",
           backgroundColor: "white",
           borderRadius: ITEM_BORDER_RADIUS,
+          cursor: "pointer",
           willChange: "transform",
           ...pressStyleProps,
         }}
@@ -80,7 +79,6 @@ const MovieCell = React.memo(props => {
             bottom: 0,
             backgroundColor: "white",
             padding: 15,
-            willChange: "transform",
           }}
         >
           <h1 style={{ ...human.title1, fontWeight: "bold" }}>{title}</h1>
