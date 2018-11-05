@@ -18,6 +18,7 @@ import { uiKit, human } from "../Typography";
 import { absoluteFill } from "../Styles";
 import { MovieDetailResourcce } from "../Resources/MovieDetails";
 
+
 const DetailPage = props => {
   const { hasNavigated } = useContext(HistoryStack.Context);
   const { width, height } = useWindowSize();

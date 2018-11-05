@@ -1,8 +1,7 @@
 import React from "react";
-// import { Router, Redirect } from "@reach/router";
+
 import { createSwitchNavigator } from "@react-navigation/core";
 import { createBrowserApp } from "@react-navigation/web";
-
 import { Spinner } from "./Components/Spinner";
 
 const AppNavigator = createSwitchNavigator(

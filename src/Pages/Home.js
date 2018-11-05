@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { VariableSizeList as List } from "react-window";
 import { useWindowSize } from "the-platform";
 
@@ -11,8 +11,11 @@ import { uiKit } from "../Typography";
 import { ITEM_WIDTH, ITEM_HEIGHT, HEADER_HEIGHT } from "../Config";
 
 const Home = React.memo(props => {
-  const [isLoading, setLoading] = useState(false);
+  useEffect(() => {
+    document.title = "Movies";
+  }, []);
 
+  const [isLoading, setLoading] = useState(false);
   const [currentPage, updateCurrentPage] = useSessionState(
     1,
     "movieListNumPages"
