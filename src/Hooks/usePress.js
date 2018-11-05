@@ -53,7 +53,8 @@ const usePress = (role, callback, preventDefault = false) => {
   pointerCleanupRef.current = useCallback(() => {
     const element = pressRef.current;
     document.removeEventListener("pointerup", handlePointerUp, false);
-    element.removeEventListener("pointerout", handlePointerCancel, false);
+    element.removeEventListener("pointercancel", handlePointerCancel, false);
+    element.removeEventListener("pointerleave", handlePointerCancel, false);
   }, []);
 
   const handlePointerDown = useCallback(event => {
@@ -61,7 +62,8 @@ const usePress = (role, callback, preventDefault = false) => {
 
     const element = pressRef.current;
     document.addEventListener("pointerup", handlePointerUp, false);
-    element.addEventListener("pointerout", handlePointerCancel, false);
+    element.addEventListener("pointercancel", handlePointerCancel, false);
+    element.addEventListener("pointerleave", handlePointerCancel, false);
   }, []);
 
   const clickPd = useCallback(event => {
@@ -78,6 +80,7 @@ const usePress = (role, callback, preventDefault = false) => {
 
     // Necessary for pointer events polyfill
     element.setAttribute("touch-action", "maniuplation");
+    element.setAttribute("draggable", "false");
 
     element.addEventListener("pointerdown", handlePointerDown, false);
     element.addEventListener("keydown", handleKeyDown, false);
