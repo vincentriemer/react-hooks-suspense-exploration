@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useWindowSize } from "the-platform";
 import { IoIosClose } from "react-icons/io";
 import { useSpring, animated, config } from "react-spring";
@@ -13,14 +13,14 @@ import { uiKit, human } from "../Typography";
 import { absoluteFill } from "../Styles";
 import { MovieDetailResourcce } from "../Resources/MovieDetails";
 
-const DetailPage = ({ navigate, location, movieId }) => {
+const DetailPage = ({ navigate, movieId }) => {
   const { hasNavigated } = useContext(HistoryStack.Context);
   const { width, height } = useWindowSize();
 
   const [closePressRef, isClosedPressed] = usePress(
     "link",
     () => {
-      hasNavigated ? window.history.back() : navigate("/movies");
+      hasNavigated ? window.history.back() : navigate("/");
     },
     true
   );
@@ -31,24 +31,17 @@ const DetailPage = ({ navigate, location, movieId }) => {
     config: config.stiff,
   });
 
-  const loadData = useCallback(() => {
-    try {
-      return MovieDetailResourcce.read(movieId);
-    } catch (err) {
-      if (location.state) {
-        return location.state;
-      }
-      throw err;
-    }
-  }, []);
-
   const {
     title,
     releaseYear,
     posterUrl,
     placeholderPosterUrl,
     synopsis,
-  } = loadData();
+  } = MovieDetailResourcce.read(movieId);
+
+  useEffect(() => {
+    document.title = title;
+  }, []);
 
   return (
     <div

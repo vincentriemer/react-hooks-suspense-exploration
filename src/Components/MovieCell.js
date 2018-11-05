@@ -13,7 +13,7 @@ import { colors } from "../Colors";
 
 const MovieCell = React.memo(props => {
   const { id, title, posterUrl, placeholderPosterUrl, releaseYear } = props;
-  const targetUrl = `/movies/${id}`;
+  const targetUrl = `/${id}`;
 
   const pressHandler = useCallback(() => {
     navigate(targetUrl, {
