@@ -1,17 +1,10 @@
 import { unstable_createResource } from "react-cache";
-import { ImgResource } from "../Components/Image";
 import {
   TMDB_BASE_URL,
   TMDB_API_KEY,
   TMDB_IMG_BASE_URL,
   TMDB_PLACEHOLDER_BASE_URL,
 } from "../Config";
-
-export async function preloadThumbnails(movieData) {
-  for (const data of movieData) {
-    await ImgResource.preload(data.placeholderPosterUrl);
-  }
-}
 
 export const fetchMovieList = async page => {
   const url = `${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}&page=${page}`;

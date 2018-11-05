@@ -7,7 +7,7 @@ const Detail = React.lazy(() => import("./Pages/Detail"));
 
 const App = props => {
   return (
-    <React.Suspense maxDuration={500} fallback={<Spinner />}>
+    <React.Suspense maxDuration={1000} fallback={<Spinner />}>
       <Router>
         <Redirect from="/" to="/movies" />
         <Home path="/movies" />

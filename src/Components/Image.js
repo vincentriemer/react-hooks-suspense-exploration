@@ -1,6 +1,6 @@
 import "./img.css";
 
-import React from "react";
+import React, { useRef } from "react";
 import { unstable_createResource as createResource } from "react-cache";
 import { absoluteFill } from "../Styles";
 
@@ -35,41 +35,53 @@ const imgStyle = {
   ...absoluteFill,
   objectFit: "cover",
   pointerEvents: "none",
-  transition: "opacity 0.2s",
 };
 
-const InnerImg = React.memo(({ src, placholderSrc, isFallback, ...rest }) => (
-  <>
-    {placholderSrc && (
-      <Img
-        key="fallback"
-        className="img-placeholder"
-        draggable={false}
-        style={imgStyle}
-        src={placholderSrc}
-        {...rest}
-      />
-    )}
-    <Img
-      key="original"
-      draggable={false}
-      style={{ ...imgStyle, opacity: isFallback ? 0 : 1 }}
-      src={isFallback ? null : src}
-      {...rest}
-    />
-  </>
-));
+const InnerImg = React.memo(
+  ({ src, placeholderSrc, isFallback = false, reveal = false, ...rest }) => (
+    <>
+      {isFallback &&
+        placeholderSrc && (
+          <Img
+            key="fallback"
+            className="img-placeholder"
+            draggable={false}
+            style={imgStyle}
+            src={placeholderSrc}
+            {...rest}
+          />
+        )}
+      {!isFallback && (
+        <Img
+          className={reveal ? "reveal" : ""}
+          key="original"
+          draggable={false}
+          style={imgStyle}
+          src={isFallback ? null : src}
+          {...rest}
+        />
+      )}
+    </>
+  )
+);
 
-const AsyncImage = React.memo(({ style, ...rest }) => {
+const AsyncImage = React.memo(({ style, maxDuration = 300, ...rest }) => {
+  const isCached = useRef(true);
+  try {
+    ImgResource.read(rest.src);
+  } catch (_) {
+    isCached.current = false;
+  }
+
+  const placeholderJSX = <InnerImg {...rest} isFallback={true} />;
+
   return (
     <div style={{ ...style, backgroundColor: "lightgray" }}>
       <ImageErrorContainer>
-        <React.Suspense maxDuration={0} fallback={<div />}>
-          <React.Suspense
-            maxDuration={100}
-            fallback={<InnerImg {...rest} isFallback={true} />}
-          >
-            <InnerImg {...rest} isFallback={false} />
+        <React.Suspense maxDuration={maxDuration} fallback={null}>
+          <React.Suspense maxDuration={200} fallback={placeholderJSX}>
+            {!isCached.current ? placeholderJSX : null}
+            <InnerImg {...rest} reveal={!isCached.current} />
           </React.Suspense>
         </React.Suspense>
       </ImageErrorContainer>

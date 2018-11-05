@@ -69,7 +69,8 @@ const MovieCell = React.memo(props => {
           alt=""
           style={absoluteFill}
           src={posterUrl}
-          placholderSrc={placeholderPosterUrl}
+          placeholderSrc={placeholderPosterUrl}
+          maxDuration={0}
         />
         <div
           style={{
@@ -83,7 +84,7 @@ const MovieCell = React.memo(props => {
           }}
         >
           <h1 style={{ ...human.title1, fontWeight: "bold" }}>{title}</h1>
-          <h2 style={{ ...uiKit.subhead, color: colors.gray }}>
+          <h2 style={{ ...uiKit.subhead, color: colors.black, opacity: 0.7 }}>
             {releaseYear}
           </h2>
         </div>

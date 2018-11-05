@@ -6,7 +6,7 @@ export const TMDB_IMG_BASE_URL = "https://image.tmdb.org/t/p/w780";
 
 // Layout Config
 export const HEADER_HEIGHT = 100;
-export const FOOTER_HEIGHT = 100;
+export const FOOTER_HEIGHT = 150;
 export const ITEM_WIDTH = 350;
 export const ITEM_HEIGHT = 450;
 export const ITEM_BORDER_RADIUS = 8;

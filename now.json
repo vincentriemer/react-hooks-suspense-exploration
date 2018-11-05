@@ -1,6 +1,12 @@
 {
-  "type": "docker",
-  "features": {
-    "cloud": "v2"
+  "name": "react-hooks-suspense-test",
+  "type": "static",
+  "static": {
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }

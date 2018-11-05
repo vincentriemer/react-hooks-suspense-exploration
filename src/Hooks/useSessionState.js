@@ -1,20 +1,20 @@
 import { useState, useCallback } from "react";
 
-const pageStorage = {};
+const sessionStorage = {};
 
 export function useSessionState(
   initialValue,
   persistKey,
   onlyReportInitialValue = false
 ) {
-  const persistedValue = pageStorage[persistKey];
+  const persistedValue = sessionStorage[persistKey];
 
   const [value, setValue] = useState(
     persistedValue ? persistedValue : initialValue
   );
 
   const handleValueUpdate = useCallback(newValue => {
-    pageStorage[persistKey] = newValue;
+    sessionStorage[persistKey] = newValue;
     !onlyReportInitialValue && setValue(newValue);
   }, []);
 

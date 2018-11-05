@@ -38,10 +38,10 @@ code {
   justify-content: center;
 }
 
-.react-window {
-  will-change: transform;
-}
+/* .react-window {
+  will-change: auto !important;
+} */
 
-.react-window > div {
+/* .react-window > div {
   will-change: transform;
-}
+} */
