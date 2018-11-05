@@ -1,6 +1,7 @@
 {
   "name": "react-hooks-suspense-exploration",
   "type": "static",
+  "alias": "react-hooks-suspense-exploration.vincentriemer.com",
   "static": {
     "rewrites": [
       {
@@ -8,5 +9,10 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "build": {
+    "env": {
+      "REACT_APP_TMDB_API_KEY": "@tmdb-api-key"
+    }
   }
 }
