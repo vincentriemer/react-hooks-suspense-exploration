@@ -1,7 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { useWindowSize } from "the-platform";
 import { IoIosClose } from "react-icons/io";
 import { useSpring, animated, config } from "react-spring";
+import {
+  useNavigationParam,
+  useNavigationState,
+  useNavigation,
+} from "react-navigation-hooks";
 
 import * as HistoryStack from "../Components/HistoryStack";
 import { Image } from "../Components/Image";
@@ -13,14 +18,20 @@ import { uiKit, human } from "../Typography";
 import { absoluteFill } from "../Styles";
 import { MovieDetailResourcce } from "../Resources/MovieDetails";
 
-const DetailPage = ({ navigate, movieId }) => {
+
+const DetailPage = props => {
   const { hasNavigated } = useContext(HistoryStack.Context);
   const { width, height } = useWindowSize();
+
+  const { navigate, setParams } = useNavigation();
+
+  const movieId = useNavigationParam("movieId");
+  const movieTitle = useNavigationParam("movieTitle");
 
   const [closePressRef, isClosedPressed] = usePress(
     "link",
     () => {
-      hasNavigated ? window.history.back() : navigate("/");
+      navigate("Home");
     },
     true
   );
@@ -40,8 +51,10 @@ const DetailPage = ({ navigate, movieId }) => {
   } = MovieDetailResourcce.read(movieId);
 
   useEffect(() => {
-    document.title = title;
-  }, []);
+    if (movieTitle == null) {
+      setParams({ movieTitle: title });
+    }
+  });
 
   return (
     <div
@@ -49,6 +62,7 @@ const DetailPage = ({ navigate, movieId }) => {
         width,
         height,
         overflow: "hidden",
+        overflowY: "auto",
         backgroundColor: "white",
 
         display: "flex",
@@ -107,7 +121,12 @@ const DetailPage = ({ navigate, movieId }) => {
         </h2>
       </div>
       <div
-        style={{ backgroundColor: "white", paddingLeft: 20, paddingRight: 20 }}
+        style={{
+          backgroundColor: "white",
+          paddingLeft: 20,
+          paddingRight: 20,
+          paddingBottom: 50,
+        }}
       >
         <p style={uiKit.body}>{synopsis}</p>
       </div>

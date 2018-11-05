@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useSpring, animated } from "react-spring";
-import { navigate } from "@reach/router";
+import { useNavigation } from "react-navigation-hooks";
 
 import { Image } from "./Image";
 
@@ -15,11 +15,12 @@ const MovieCell = React.memo(props => {
   const { id, title, posterUrl, placeholderPosterUrl, releaseYear } = props;
   const targetUrl = `/${id}`;
 
+  const { navigate } = useNavigation();
+
   const pressHandler = useCallback(() => {
-    navigate(targetUrl, {
-      state: {
-        ...props,
-      },
+    navigate("Detail", {
+      movieId: id,
+      movieTitle: title,
     });
   }, []);
 

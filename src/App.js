@@ -1,22 +1,36 @@
 import React from "react";
-import { Router } from "@reach/router";
+
+import { createSwitchNavigator } from "@react-navigation/core";
+import { createBrowserApp } from "@react-navigation/web";
 import { Spinner } from "./Components/Spinner";
-import * as HistoryStack from "./Components/HistoryStack";
 
-const Home = React.lazy(() => import("./Pages/Home"));
-const Detail = React.lazy(() => import("./Pages/Detail"));
+const AppNavigator = createSwitchNavigator(
+  {
+    Home: {
+      screen: React.lazy(() => import("./Pages/Home")),
+      path: "",
+      navigationOptions: ({ navigation }) => ({
+        title: "Movies",
+      }),
+    },
+    Detail: {
+      screen: React.lazy(() => import("./Pages/Detail")),
+      path: ":movieId",
+      navigationOptions: ({ navigation }) => ({
+        title: navigation.getParam("movieTitle", "Movie"),
+      }),
+    },
+  },
+  {
+    initialRouteName: "Home",
+    backBehavior: "initialRoute",
+  }
+);
 
-const App = React.memo(props => {
-  return (
-    <HistoryStack.Provider>
-      <React.Suspense maxDuration={400} fallback={<Spinner />}>
-        <Router>
-          <Detail path="/:movieId" />
-          <Home path="/" />
-        </Router>
-      </React.Suspense>
-    </HistoryStack.Provider>
-  );
-});
+const App = createBrowserApp(AppNavigator);
 
-export default App;
+export default () => (
+  <React.Suspense maxDuration={400} fallback={<Spinner />}>
+    <App />
+  </React.Suspense>
+);
