@@ -7,6 +7,8 @@
   },
   "devDependencies": {
     "@reach/router": "^1.2.1",
+    "@react-navigation/core": "^3.0.0-alpha.19",
+    "@react-navigation/web": "^1.0.0-alpha.7",
     "eslint-plugin-react-hooks": "^0.0.0",
     "invariant": "^2.2.4",
     "pepjs": "^0.4.3",
@@ -14,6 +16,7 @@
     "react-cache": "^2.0.0-alpha.1",
     "react-dom": "^16.7.0-alpha.0",
     "react-icons": "^3.2.2",
+    "react-navigation-hooks": "^1.0.0-alpha.2",
     "react-scripts": "2.1.1",
     "react-spring": "^6.1.6",
     "react-window": "^1.2.2",

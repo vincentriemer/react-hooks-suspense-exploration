@@ -191,8 +191,4 @@ const Home = React.memo(props => {
   );
 });
 
-export default () => (
-  <>
-    <Home />
-  </>
-);
+export default Home;

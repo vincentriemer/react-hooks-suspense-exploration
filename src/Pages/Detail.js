@@ -1,7 +1,12 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { useWindowSize } from "the-platform";
 import { IoIosClose } from "react-icons/io";
 import { useSpring, animated, config } from "react-spring";
+import {
+  useNavigationParam,
+  useNavigationState,
+  useNavigation,
+} from "react-navigation-hooks";
 
 import * as HistoryStack from "../Components/HistoryStack";
 import { Image } from "../Components/Image";
@@ -13,14 +18,19 @@ import { uiKit, human } from "../Typography";
 import { absoluteFill } from "../Styles";
 import { MovieDetailResourcce } from "../Resources/MovieDetails";
 
-const DetailPage = ({ navigate, location, movieId }) => {
+const DetailPage = props => {
   const { hasNavigated } = useContext(HistoryStack.Context);
   const { width, height } = useWindowSize();
+
+  const { navigate, setParams } = useNavigation();
+
+  const movieId = useNavigationParam("movieId");
+  const movieTitle = useNavigationParam("movieTitle");
 
   const [closePressRef, isClosedPressed] = usePress(
     "link",
     () => {
-      hasNavigated ? window.history.back() : navigate("/movies");
+      navigate("Home");
     },
     true
   );
@@ -31,24 +41,19 @@ const DetailPage = ({ navigate, location, movieId }) => {
     config: config.stiff,
   });
 
-  const loadData = useCallback(() => {
-    try {
-      return MovieDetailResourcce.read(movieId);
-    } catch (err) {
-      if (location.state) {
-        return location.state;
-      }
-      throw err;
-    }
-  }, []);
-
   const {
     title,
     releaseYear,
     posterUrl,
     placeholderPosterUrl,
     synopsis,
-  } = loadData();
+  } = MovieDetailResourcce.read(movieId);
+
+  useEffect(() => {
+    if (movieTitle == null) {
+      setParams({ movieTitle: title });
+    }
+  });
 
   return (
     <div
@@ -56,6 +61,7 @@ const DetailPage = ({ navigate, location, movieId }) => {
         width,
         height,
         overflow: "hidden",
+        overflowY: "auto",
         backgroundColor: "white",
 
         display: "flex",
@@ -114,7 +120,12 @@ const DetailPage = ({ navigate, location, movieId }) => {
         </h2>
       </div>
       <div
-        style={{ backgroundColor: "white", paddingLeft: 20, paddingRight: 20 }}
+        style={{
+          backgroundColor: "white",
+          paddingLeft: 20,
+          paddingRight: 20,
+          paddingBottom: 50,
+        }}
       >
         <p style={uiKit.body}>{synopsis}</p>
       </div>
