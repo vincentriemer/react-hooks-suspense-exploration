@@ -1,3 +1,4 @@
+// adapted from https://github.com/hectahertz/react-native-typography
 import { colors } from "./Colors";
 
 const systemFontFamily = `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",

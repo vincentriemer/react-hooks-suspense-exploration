@@ -14,6 +14,20 @@ export const ImgResource = createResource(src => {
   });
 });
 
+export const ImgDecodeResource = createResource(
+  src => {
+    const image = new Image();
+    image.src = src;
+
+    if (typeof image.decode === "function") {
+      return image.decode();
+    } else {
+      return Promise.resolve();
+    }
+  },
+  src => `${src}${Math.floor(Date.now() / 1000)}`
+);
+
 class ImageErrorContainer extends React.Component {
   state = { error: false };
 
@@ -28,7 +42,8 @@ class ImageErrorContainer extends React.Component {
 
 export const Img = props => {
   ImgResource.read(props.src);
-  return <img decoding="async" alt={props.alt} {...props} />;
+  // ImgDecodeResource.read(props.src);
+  return <img alt={props.alt} {...props} />;
 };
 
 const imgStyle = {

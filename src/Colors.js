@@ -1,3 +1,5 @@
+// adapted from https://github.com/hectahertz/react-native-typography
+
 export const colors = {
   red: "#FF3B30",
   orange: "#FF9500",
