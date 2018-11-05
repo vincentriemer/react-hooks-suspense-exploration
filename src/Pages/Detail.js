@@ -1,8 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { useWindowSize } from "the-platform";
 import { IoIosClose } from "react-icons/io";
 import { useSpring, animated, config } from "react-spring";
 
+import * as HistoryStack from "../Components/HistoryStack";
 import { Image } from "../Components/Image";
 
 import { usePress } from "../Hooks/usePress";
@@ -13,12 +14,13 @@ import { absoluteFill } from "../Styles";
 import { MovieDetailResourcce } from "../Resources/MovieDetails";
 
 const DetailPage = ({ navigate, location, movieId }) => {
+  const { hasNavigated } = useContext(HistoryStack.Context);
   const { width, height } = useWindowSize();
 
   const [closePressRef, isClosedPressed] = usePress(
     "link",
     () => {
-      navigate("/movies");
+      hasNavigated ? window.history.back() : navigate("/movies");
     },
     true
   );
@@ -89,6 +91,8 @@ const DetailPage = ({ navigate, location, movieId }) => {
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
+          overflow: "hidden",
+          willChange: "opacity",
           ...closeAnimProps,
         }}
       >
