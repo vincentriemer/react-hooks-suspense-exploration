@@ -4,18 +4,21 @@ import { Location } from "@reach/router";
 export const Context = React.createContext({ hasNavigated: false });
 
 const InnerProvider = React.memo(({ locationKey, children }) => {
-  const [hasNavigated, setHasNavigated] = useState(false);
+  const updateOnlyRef = useRef(false);
 
-  const prevLocationRef = useRef({ hasNavigated: false });
+  const [hasNavigated, setHasNavigated] = useState(false);
   useEffect(
     () => {
-      if (prevLocationRef.current != null && !hasNavigated) {
+      if (updateOnlyRef && !hasNavigated) {
         setHasNavigated(true);
       }
-      prevLocationRef.current = locationKey;
     },
     [locationKey]
   );
+
+  useEffect(() => {
+    updateOnlyRef.current = true;
+  }, []);
 
   return (
     <Context.Provider value={{ hasNavigated }}>{children}</Context.Provider>
