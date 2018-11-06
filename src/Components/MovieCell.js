@@ -18,8 +18,8 @@ const MovieCell = React.memo(props => {
   const pressHandler = useCallback(() => {
     navigate(targetUrl, {
       state: {
-        ...props,
-      },
+        ...props
+      }
     });
   }, []);
 
@@ -28,7 +28,7 @@ const MovieCell = React.memo(props => {
   const [pressStyleProps] = useSpring({
     transform: `scale(${isPressed ? 0.95 : 1.0})`,
     config: { tension: 500, friction: 30 },
-    native: true,
+    native: true
   });
 
   return (
@@ -38,7 +38,7 @@ const MovieCell = React.memo(props => {
         maxWidth: ITEM_WIDTH,
         height: ITEM_HEIGHT - 60,
         marginLeft: 30,
-        marginRight: 30,
+        marginRight: 30
       }}
     >
       <div
@@ -48,6 +48,7 @@ const MovieCell = React.memo(props => {
           backgroundColor: "rgba(0, 0, 0, 0.3)",
           transform: "translateY(10px)",
           filter: "blur(20px)",
+          willChange: "transform"
         }}
       />
       <animated.a
@@ -61,7 +62,7 @@ const MovieCell = React.memo(props => {
           borderRadius: ITEM_BORDER_RADIUS,
           cursor: "pointer",
           willChange: "transform",
-          ...pressStyleProps,
+          ...pressStyleProps
         }}
       >
         <Image
@@ -78,7 +79,7 @@ const MovieCell = React.memo(props => {
             right: 0,
             bottom: 0,
             backgroundColor: "white",
-            padding: 15,
+            padding: 15
           }}
         >
           <h1 style={{ ...human.title1, fontWeight: "bold" }}>{title}</h1>
