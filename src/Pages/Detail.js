@@ -48,8 +48,11 @@ const DetailPage = ({ navigate, movieId }) => {
       style={{
         width,
         height,
-        overflow: "hidden",
+        overflowX: "hidden",
+        overflowY: "scroll",
         backgroundColor: "white",
+        WebkitOverflowScrolling: "touch",
+        overscrollBehavior: "contain",
 
         display: "flex",
         flexDirection: "column",
@@ -107,7 +110,12 @@ const DetailPage = ({ navigate, movieId }) => {
         </h2>
       </div>
       <div
-        style={{ backgroundColor: "white", paddingLeft: 20, paddingRight: 20 }}
+        style={{
+          backgroundColor: "white",
+          paddingLeft: 20,
+          paddingRight: 20,
+          paddingBottom: 20,
+        }}
       >
         <p style={uiKit.body}>{synopsis}</p>
       </div>
