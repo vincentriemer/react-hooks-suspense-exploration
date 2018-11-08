@@ -98,7 +98,7 @@ const DetailPage = ({ navigation }) => {
           overflowY: "auto",
           opacity: closeAnimVal.interpolate({
             inputRange: [0, 1],
-            outputRange: [1, 0.5],
+            outputRange: [1, 0.3],
           }),
         }}
       >

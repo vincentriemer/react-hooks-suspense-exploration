@@ -935,10 +935,10 @@
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.2.tgz#e13182e1b69871a422d7863e11a4a6f5b814a4bd"
   integrity sha512-42zEJkBpNfMEAvWR5WlwtTH22oDzcMjFsL9gDGExwF8X8WvAiw7Vwop7hPw03QT8TKfec83LwbHj6SvpqM4ELQ==
 
-"@vincentriemer/animated-dom@0.0.19", "@vincentriemer/animated-dom@^0.0.19":
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/@vincentriemer/animated-dom/-/animated-dom-0.0.19.tgz#26f8061d9f09c158a80d99121b884a15675ef037"
-  integrity sha512-wQ3bRrEc9piCpVoLxx1JNcMpJ4pnZ+jbIV8mZ6HPV7PCxq0n5qA3ja85IS/cbxvFrnmMghQrnnWrQUStIdq4kg==
+"@vincentriemer/animated-dom@0.0.20", "@vincentriemer/animated-dom@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@vincentriemer/animated-dom/-/animated-dom-0.0.20.tgz#4578c65c5bdaee883b3817a04511d76b4bd6c3fe"
+  integrity sha512-xz5YlouCrHN0l43osVxqe+JHKvrD5gab0lujvsB6Y4P5eY+eN4Jp5eowLMeBI+YFKJhYLwP0VQv8jIZArLWvrA==
   dependencies:
     "@babel/runtime" "7.0.0-beta.31"
     invariant "^2.2.0"

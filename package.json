@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "serve": "^10.0.2",
-    "@vincentriemer/animated-dom": "0.0.19",
+    "@vincentriemer/animated-dom": "0.0.20",
     "web-animations-js": "^2.3.1",
     "prop-types": "^15.6.2"
   },

@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/react-navigation/react-navigation-transitioner#readme",
   "dependencies": {
-    "@vincentriemer/animated-dom": "^0.0.19"
+    "@vincentriemer/animated-dom": "^0.0.20"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
