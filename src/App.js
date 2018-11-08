@@ -1,36 +1,34 @@
 import React from "react";
 
-import { createSwitchNavigator } from "@react-navigation/core";
+import { StackRouter, createNavigator } from "@react-navigation/core";
 import { createBrowserApp } from "@react-navigation/web";
 import { Spinner } from "./Components/Spinner";
+import { Transitioner } from "./local-forks/react-navigation-transitioner";
 
-const AppNavigator = createSwitchNavigator(
-  {
-    Home: {
-      screen: React.lazy(() => import("./Pages/Home")),
-      path: "",
-      navigationOptions: ({ navigation }) => ({
-        title: "Movies",
-      }),
-    },
-    Detail: {
-      screen: React.lazy(() => import("./Pages/Detail")),
-      path: ":movieId",
-      navigationOptions: ({ navigation }) => ({
-        title: navigation.getParam("movieTitle", "Movie"),
-      }),
-    },
+import HomePage from "./Pages/Home";
+import DetailPage from "./Pages/Detail";
+
+const routeConfigs = {
+  Home: {
+    screen: HomePage,
+    path: "",
   },
-  {
-    initialRouteName: "Home",
-    backBehavior: "initialRoute",
-  }
-);
+  Detail: {
+    screen: DetailPage,
+    path: ":movieId",
+  },
+};
 
+const options = {
+  initialRouteName: "Home",
+};
+
+const router = StackRouter(routeConfigs, routeConfigs);
+const AppNavigator = createNavigator(Transitioner, router, options);
 const App = createBrowserApp(AppNavigator);
 
 export default () => (
-  <React.Suspense maxDuration={400} fallback={<Spinner />}>
+  <React.Suspense maxDuration={800} fallback={<Spinner />}>
     <App />
   </React.Suspense>
 );

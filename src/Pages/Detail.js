@@ -1,46 +1,39 @@
-import React, { useCallback, useContext, useEffect } from "react";
-import { useWindowSize } from "the-platform";
+import React, { useEffect } from "react";
 import { IoIosClose } from "react-icons/io";
-import { useSpring, animated, config } from "react-spring";
-import {
-  useNavigationParam,
-  useNavigationState,
-  useNavigation,
-} from "react-navigation-hooks";
+import Animated from "@vincentriemer/animated-dom";
 
-import * as HistoryStack from "../Components/HistoryStack";
+import PanTransition from "../Transitions/PanTransition";
 import { Image } from "../Components/Image";
 
 import { usePress } from "../Hooks/usePress";
+import { useAnimatedValue } from "../Hooks/useAnimatedValue";
 
 import { colors } from "../Colors";
 import { uiKit, human } from "../Typography";
 import { absoluteFill } from "../Styles";
 import { MovieDetailResourcce } from "../Resources/MovieDetails";
 
+const DetailPage = ({ navigation }) => {
+  const {
+    replace,
+    setParams,
+    pop,
+    dangerouslyGetParent,
+    getParam,
+  } = navigation;
 
-const DetailPage = props => {
-  const { hasNavigated } = useContext(HistoryStack.Context);
-  const { width, height } = useWindowSize();
-
-  const { navigate, setParams } = useNavigation();
-
-  const movieId = useNavigationParam("movieId");
-  const movieTitle = useNavigationParam("movieTitle");
+  const movieId = getParam("movieId");
+  const movieTitle = getParam("movieTitle");
 
   const [closePressRef, isClosedPressed] = usePress(
     "link",
     () => {
-      navigate("Home");
+      const numStacks = dangerouslyGetParent().state.routes.length;
+      numStacks === 1 ? replace("Home") : pop();
     },
     true
   );
-
-  const [closeAnimProps] = useSpring({
-    opacity: isClosedPressed ? 0.4 : 1.0,
-    native: true,
-    config: config.stiff,
-  });
+  const closeAnimVal = useAnimatedValue(isClosedPressed ? 1 : 0);
 
   const {
     title,
@@ -59,11 +52,12 @@ const DetailPage = props => {
   return (
     <div
       style={{
-        width,
-        height,
+        width: "100%",
+        height: "100%",
         overflow: "hidden",
         overflowY: "auto",
         backgroundColor: "white",
+        WebkitOverflowScrolling: "touch",
 
         display: "flex",
         flexDirection: "column",
@@ -80,10 +74,12 @@ const DetailPage = props => {
           placeholderSrc={placeholderPosterUrl}
         />
       </div>
-      <animated.a
+      <Animated.anchor
         href="/movies"
         title="Go to movie list"
-        ref={closePressRef}
+        domRef={elem => {
+          closePressRef.current = elem;
+        }}
         style={{
           position: "absolute",
           top: 30,
@@ -98,9 +94,12 @@ const DetailPage = props => {
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
-          overflow: "hidden",
-          willChange: "opacity",
-          ...closeAnimProps,
+          overflowX: "hidden",
+          overflowY: "auto",
+          opacity: closeAnimVal.interpolate({
+            inputRange: [0, 1],
+            outputRange: [1, 0.5],
+          }),
         }}
       >
         <IoIosClose
@@ -108,7 +107,7 @@ const DetailPage = props => {
           size={45}
           color={colors.black}
         />
-      </animated.a>
+      </Animated.anchor>
       <div
         style={{
           backgroundColor: "white",
@@ -134,4 +133,20 @@ const DetailPage = props => {
   );
 };
 
-export default DetailPage;
+export default class extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam("movieTitle", "Movie"),
+    ...PanTransition.navigationOptions,
+  });
+
+  render() {
+    return (
+      <PanTransition
+        {...this.props}
+        style={{ ...absoluteFill, ...this.props.style }}
+      >
+        <DetailPage {...this.props} />
+      </PanTransition>
+    );
+  }
+}

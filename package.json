@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "serve": "^10.0.2"
+    "serve": "^10.0.2",
+    "@vincentriemer/animated-dom": "0.0.19",
+    "web-animations-js": "^2.3.1",
+    "prop-types": "^15.6.2"
   },
   "devDependencies": {
     "@reach/router": "^1.2.1",
@@ -12,15 +15,14 @@
     "eslint-plugin-react-hooks": "^0.0.0",
     "invariant": "^2.2.4",
     "pepjs": "^0.4.3",
-    "react": "^16.7.0-alpha.0",
+    "react": "16.7.0-alpha.0",
     "react-cache": "^2.0.0-alpha.1",
-    "react-dom": "^16.7.0-alpha.0",
+    "react-dom": "16.7.0-alpha.0",
     "react-icons": "^3.2.2",
     "react-navigation-hooks": "^1.0.0-alpha.2",
     "react-scripts": "2.1.1",
     "react-spring": "^6.1.6",
     "react-window": "^1.2.2",
-    "scheduler": "^0.10.0",
     "the-platform": "^0.9.3",
     "webpack-bundle-analyzer": "^3.0.3"
   },
@@ -44,5 +46,14 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "installConfig": {
+    "pnp": false
+  },
+  "workspaces": [
+    "src/local-forks/react-navigation-transitioner"
+  ],
+  "resolutions": {
+    "**/scheduler": "0.10.0"
+  }
 }

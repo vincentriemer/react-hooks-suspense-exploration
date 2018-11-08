@@ -18,7 +18,9 @@ const usePress = (role, callback, preventDefault = false) => {
 
   const handleKeyUp = useCallback(() => {
     setPressed(false);
-    callback();
+    requestAnimationFrame(() => {
+      callback();
+    });
 
     const element = pressRef.current;
     element.removeEventListener("keyup", handleKeyUp, false);
@@ -46,7 +48,8 @@ const usePress = (role, callback, preventDefault = false) => {
 
   const handlePointerUp = useCallback(() => {
     setPressed(false);
-    callback();
+    // unstable_runWithPriority(unstable_IdlePriority, () => callback());
+    setTimeout(() => callback(), 16);
     pointerCleanupRef.current();
   }, []);
 

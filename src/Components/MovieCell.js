@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
-import { useSpring, animated } from "react-spring";
+import Animated from "@vincentriemer/animated-dom";
 import { useNavigation } from "react-navigation-hooks";
+import { useAnimatedValue } from "../Hooks/useAnimatedValue";
 
 import { Image } from "./Image";
 
@@ -25,12 +26,7 @@ const MovieCell = React.memo(props => {
   }, []);
 
   const [pressRef, isPressed] = usePress("link", pressHandler, true);
-
-  const [pressStyleProps] = useSpring({
-    transform: `scale(${isPressed ? 0.95 : 1.0})`,
-    config: { tension: 500, friction: 30 },
-    native: true,
-  });
+  const pressAnimValue = useAnimatedValue(isPressed ? 1 : 0);
 
   return (
     <div
@@ -49,10 +45,13 @@ const MovieCell = React.memo(props => {
           backgroundColor: "rgba(0, 0, 0, 0.3)",
           transform: "translateY(10px)",
           filter: "blur(20px)",
+          willChange: "transform",
         }}
       />
-      <animated.a
-        ref={pressRef}
+      <Animated.anchor
+        domRef={elem => {
+          pressRef.current = elem;
+        }}
         title={title}
         href={targetUrl}
         style={{
@@ -62,16 +61,25 @@ const MovieCell = React.memo(props => {
           borderRadius: ITEM_BORDER_RADIUS,
           cursor: "pointer",
           willChange: "transform",
-          ...pressStyleProps,
+          transform: [
+            {
+              scale: pressAnimValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: [1, 0.95],
+              }),
+            },
+          ],
         }}
       >
-        <Image
-          alt=""
-          style={absoluteFill}
-          src={posterUrl}
-          placeholderSrc={placeholderPosterUrl}
-          maxDuration={0}
-        />
+        <div style={absoluteFill}>
+          <Image
+            alt=""
+            style={absoluteFill}
+            src={posterUrl}
+            placeholderSrc={placeholderPosterUrl}
+            maxDuration={0}
+          />
+        </div>
         <div
           style={{
             position: "absolute",
@@ -87,7 +95,7 @@ const MovieCell = React.memo(props => {
             {releaseYear}
           </h2>
         </div>
-      </animated.a>
+      </Animated.anchor>
     </div>
   );
 });

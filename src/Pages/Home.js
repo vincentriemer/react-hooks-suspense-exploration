@@ -2,6 +2,8 @@ import React, { useCallback, useState, useEffect } from "react";
 import { VariableSizeList as List } from "react-window";
 import { useWindowSize } from "the-platform";
 
+import { absoluteFill } from "../Styles";
+import FadeTransition from "../Transitions/FadeTransition";
 import { useSessionState } from "../Hooks/useSessionState";
 import { MovieListResource } from "../Resources/MovieList";
 import { ImgResource } from "../Components/Image";
@@ -194,4 +196,21 @@ const Home = React.memo(props => {
   );
 });
 
-export default Home;
+export default class extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam("movieTitle", "Movie"),
+    ...FadeTransition.navigationOptions,
+  });
+
+  render() {
+    return (
+      <FadeTransition
+        {...this.props}
+        style={{ ...absoluteFill, ...this.props.style }}
+        ref={this.props.transitionRef}
+      >
+        <Home {...this.props} />
+      </FadeTransition>
+    );
+  }
+}
